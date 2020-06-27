@@ -1,5 +1,6 @@
 package com.example.instagramclone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class SignUp extends AppCompatActivity {
     private TextView txtGetData;
     private Button btnGetAllData;
     private String allKickBoxers;
+    private Button btnTransition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,7 @@ public class SignUp extends AppCompatActivity {
         edtPunchSpeed = findViewById(R.id.edtPunchSpeed);
         txtGetData = findViewById(R.id.txtGetData);
         btnGetAllData = findViewById(R.id.btnGetAllData);
+        btnTransition = findViewById(R.id.btnNextActivity);
 
         txtGetData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 allKickBoxers = "";
                 ParseQuery<ParseObject> queryAll = ParseQuery.getQuery("kick_boxer");
+                queryAll.whereGreaterThan("punchPower",100);
                 queryAll.findInBackground(new FindCallback<ParseObject>() {
                     @Override
                     public void done(List<ParseObject> objects, ParseException e) {
@@ -77,6 +81,13 @@ public class SignUp extends AppCompatActivity {
                        }
                     }
                 });
+            }
+        });
+        btnTransition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignUp.this,SignUpLoginActivity.class);
+                startActivity(intent);
             }
         });
     }
